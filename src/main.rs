@@ -83,8 +83,8 @@ fn main() {
         .add_plugins(DefaultPlugins.set(WindowPlugin {
             window: WindowDescriptor {
                 // mode: bevy::window::WindowMode::Fullscreen,
-                // width: 1920.0,
-                // height: 1080.0,
+                width: 800.0,
+                height: 800.0,
                 ..default()
             },
             ..default()
@@ -95,8 +95,8 @@ fn main() {
 // SYSTEMS
 fn setup(
     mut commands: Commands,
-    mut windows: Res<Windows>,
-    mut config: Res<Config>,
+    windows: Res<Windows>,
+    config: Res<Config>,
 ) {
     let theme = Theme {
         board_color: config.board_color,
@@ -112,9 +112,8 @@ fn setup(
 
     let center_cell = Vec2::new(config.width as f32, config.height as f32) / 2.0 * cell_size;
 
-    commands.spawn(Camera2dBundle::default());
-
-        //.ins(Transform::from_translation(center_cell.extend(999.9));
+    commands.spawn(Camera2dBundle::default())
+            .insert(Transform::from_translation(center_cell.extend(999.9)));
 
     commands.spawn(SpriteBundle {
         transform: Transform::from_translation(center_cell.extend(0.0)),
