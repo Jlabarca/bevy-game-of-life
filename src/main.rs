@@ -5,18 +5,18 @@ use bevy::{
     diagnostic::{FrameTimeDiagnosticsPlugin, LogDiagnosticsPlugin},
     prelude::*, utils::HashMap,
 };
-use components::{State, Config, RevivedEvent, StarvedEvent, Theme, Cells, Position};
+use components::{State, Config, RevivedEvent, StarvedEvent, Theme, Board, Position};
 use systems::*;
 use rand::Rng;
 
 fn main() {
     App::new()
         .insert_resource(Config {
-            width: 300,
-            height: 300,
-            board_color: Color::rgb(0.2, 0.2, 0.2),
-            alive_color: Color::rgb(0.8, 0.8, 0.8),
-            dead_color: Color::rgb(0.1, 0.1, 0.1),
+            width: 200,
+            height: 200,
+            board_color: Color::BLUE,
+            alive_color: Color::WHITE,
+            dead_color: Color::BLUE,
         })
         .add_event::<RevivedEvent>()
         .add_event::<StarvedEvent>()
@@ -25,7 +25,7 @@ fn main() {
         .add_system(revive.after(tick))
         .add_system(starve.after(tick))
         .add_plugin(FrameTimeDiagnosticsPlugin::default())
-        .add_plugin(LogDiagnosticsPlugin::default())
+       // .add_plugin(LogDiagnosticsPlugin::default())
         .add_plugins(DefaultPlugins.set(WindowPlugin {
             window: WindowDescriptor {
                 width: 800.0,
@@ -44,7 +44,7 @@ fn setup(mut commands: Commands, windows: Res<Windows>, config: Res<Config>) {
         dead_color: config.dead_color,
     };
 
-    let mut cells = Cells(HashMap::default());
+    let mut board = Board(HashMap::default());
 
     let screen_height = windows.get_primary().unwrap().height();
     let cell_size = Vec2::splat(screen_height / config.height as f32);
@@ -98,10 +98,10 @@ fn setup(mut commands: Commands, windows: Res<Windows>, config: Res<Config>) {
                 .insert(Position(cell))
                 .id();
 
-            cells.0.insert(Position(cell), entity);
+            board.0.insert(Position(cell), entity);
         }
     }
 
     commands.insert_resource(theme);
-    commands.insert_resource(cells);
+    commands.insert_resource(board);
 }

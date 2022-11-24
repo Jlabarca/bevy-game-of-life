@@ -16,8 +16,8 @@ pub struct Theme {
     pub dead_color: Color,
 }
 
-#[derive(Resource)]
-pub struct Cells(pub HashMap<Position, Entity>);
+#[derive(Resource, Clone)]
+pub struct Board(pub HashMap<Position, Entity>);
 
 #[derive(Component, Clone, Copy, PartialEq, Eq, Hash)]
 pub struct Position(pub IVec2);
@@ -44,10 +44,6 @@ pub enum State {
 }
 
 //Events
-pub struct StarvedEvent {
-    pub entity: Entity,
-}
+pub struct StarvedEvent(pub Entity);
 
-pub struct RevivedEvent {
-    pub entity: Entity,
-}
+pub struct RevivedEvent(pub Entity);
