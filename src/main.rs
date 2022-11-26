@@ -3,20 +3,21 @@ mod systems;
 
 use bevy::{
     diagnostic::{FrameTimeDiagnosticsPlugin, LogDiagnosticsPlugin},
-    prelude::*, utils::HashMap,
+    prelude::*,
+    utils::HashMap,
 };
-use components::{State, Config, RevivedEvent, StarvedEvent, Theme, Board, Position};
-use systems::*;
+use components::{Board, Config, Position, RevivedEvent, StarvedEvent, State, Theme};
 use rand::Rng;
+use systems::*;
 
 fn main() {
     App::new()
         .insert_resource(Config {
-            width: 200,
-            height: 200,
-            board_color: Color::BLUE,
-            alive_color: Color::WHITE,
-            dead_color: Color::BLUE,
+            width: 156,
+            height: 156,
+            board_color: Color::ANTIQUE_WHITE,
+            alive_color: Color::YELLOW_GREEN,
+            dead_color: Color::BLACK,
         })
         .add_event::<RevivedEvent>()
         .add_event::<StarvedEvent>()
@@ -24,8 +25,8 @@ fn main() {
         .add_system(tick)
         .add_system(revive.after(tick))
         .add_system(starve.after(tick))
-        .add_plugin(FrameTimeDiagnosticsPlugin::default())
-       // .add_plugin(LogDiagnosticsPlugin::default())
+        // .add_plugin(FrameTimeDiagnosticsPlugin::default())
+        // .add_plugin(LogDiagnosticsPlugin::default())
         .add_plugins(DefaultPlugins.set(WindowPlugin {
             window: WindowDescriptor {
                 width: 800.0,

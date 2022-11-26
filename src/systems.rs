@@ -1,5 +1,5 @@
+use crate::components::{Board, RevivedEvent, StarvedEvent, State, Theme};
 use bevy::prelude::*;
-use crate::components::{State, Theme, StarvedEvent, RevivedEvent, Board};
 
 pub fn tick(
     mut starved_writer: EventWriter<StarvedEvent>,
@@ -22,7 +22,7 @@ pub fn tick(
 
         match query.get(*entity).unwrap() {
             State::Alive => {
-                if alive_count > 3 || alive_count < 2 {
+                if !(2..=3).contains(&alive_count) {
                     starved_writer.send(StarvedEvent(*entity));
                 }
             }

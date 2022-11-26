@@ -1,4 +1,7 @@
-use bevy::{prelude::{Component, IVec2, Resource, Color, Entity}, utils::HashMap};
+use bevy::{
+    prelude::{Color, Component, Entity, IVec2, Resource},
+    utils::HashMap,
+};
 
 #[derive(Resource)]
 pub struct Config {
